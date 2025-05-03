@@ -5,7 +5,7 @@ export class Player {
         this.id = id;
 
         // question id : answer
-        this.answersSubmitted = new Map();
+        this.answersSubmitted = [];
     }
 
     updateScore(amount)
@@ -15,6 +15,12 @@ export class Player {
 
     recordAnswer(question, answer)
     {
-        this.answersSubmitted.set(question, answer);
+        if(this.answersSubmitted.filter(tuple => tuple[0] == question).length != 0)
+        {
+            console.log(`${this.name} attempted to resubmit answer to question ${question}`)
+            return
+        }
+        this.answersSubmitted.push([question, answer]);
+        console.log(`answers submitted by player ${this.name} : ${this.answersSubmitted}`)
     }
 }

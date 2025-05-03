@@ -59,7 +59,8 @@ export class GameState {
             console.warn('${player} not found');
             return;
         }
-        player.logAnswer(this.currentQuestion, answer);
+        player.recordAnswer(this.currentQuestion, answer);
+        this.fireGameStateChange();
     }
 
     // Callbacks
@@ -77,7 +78,7 @@ export class GameState {
     // Rendering
     getGameState()
     {
-        return [ this.players, this.currentQuestion, this.questions ];
+        return {players: this.players, crrtQuestion: this.currentQuestion, questions: this.questions };
     }
 
 }

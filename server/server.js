@@ -40,10 +40,12 @@ io.on('connection', (socket) => {
     if(socket === hostSocket)
     {
       console.log("The host has disconnected");
+      hostSocket = null;
     }
     else if (socket === leaderboardSocket)
     {
       console.log("The leaderboard has disconnected");
+      leaderboardSocket = null;
     }
     else 
     {
