@@ -5,6 +5,42 @@ html, body, #root {
     height: 100%;
 }
 
-.bg-red {
-    background-color: brown;
+#root {
+    background-color: #a0c9bc;
+    background-image:  linear-gradient(#90b4a9 5px, transparent 5px), linear-gradient(90deg, #90b4a9 5px, transparent 5px), linear-gradient(#90b4a9 2.5px, transparent 2.5px), linear-gradient(90deg, #90b4a9 2.5px, #a0c9bc 2.5px);
+    background-size: 200px 200px, 200px 200px, 40px 40px, 40px 40px;
+    background-position: -8px -8px, -8px -8px, -4px -4px, -4px -4px;
+}
+
+.hero-image {
+    width: 40rem;
+    animation: rock 4s linear  infinite;
+    transform-origin: bottom center;
+}
+
+.sticker {
+    width: 15rem;
+    transform-origin: bottom center;
+}
+
+.rotate-left {
+    rotate: 10deg;
+    translate: -20% 10%;
+}
+
+.rotate-right {
+    rotate: -10deg;
+    translate: 20% 10%;
+}
+
+.bounce {
+  animation: bounce 1s ease-in-out infinite;
+}
+
+@keyframes rock {
+  0%   { transform: rotate(-10deg) translate(2rem, -7rem)}
+  25%  { transform: rotate(-12deg) translate(2rem, -8rem)}
+  50%  { transform: rotate(-10deg) translate(2rem, -7rem)}
+  75%  { transform: rotate(-8deg)  translate(2rem, -8rem)}
+  100% { transform: rotate(-10deg) translate(2rem, -7rem)}
 }

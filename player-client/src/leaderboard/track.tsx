@@ -6,9 +6,8 @@ import React from 'react';
 function Track(props) {
 
   return (
-    <div className='flex gap-2'>
-        <div className='bg-stone-300 h-8 rounded-full' style={{width: `${props.player.progress * 80}vw`}}/>
-        <div className='text-4xl'>{props.player.name}</div>
+    <div className='bg-[#FECA3F] h-8 w-full rounded-xl relative leaderboard p-2'>
+        <div className='bg-[#EB564F] h-full rounded-xl' style={{width: `${props.player.progress * 100}%`}}/>
     </div>
   )
 }
