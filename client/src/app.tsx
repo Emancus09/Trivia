@@ -2,58 +2,49 @@ import { useState } from 'react'
 import { io } from 'socket.io-client';
 import {useEffect} from 'react';
 import React from 'react';
-import Leaderboard from './leaderboard/leaderboard';
-import heroText from './assets/hero-text.png';
-import ghada1 from './assets/ghada1.png';
-import ghada2 from './assets/ghada2.png';
 
-const URL = process.env.NODE_ENV === 'production' ? undefined : 'http://192.168.0.161:8000';
-
+const URL = 'http://192.168.0.161:8000';
 const socket = io(URL);
+
+enum CLIENT_TYPE {
+  Player,
+  Host,
+  Board
+}
 
 function App() {
 
-  useEffect(() => {
-    function onConnect() {
-    }
+  const onPlayerSelect = () => {
+    setType(CLIENT_TYPE.Player);
+  }
 
-    function onDisconnect() {
-    }
+  const onHostSelect = () => {
+    setType(CLIENT_TYPE.Host);
+  }
 
-    function onFooEvent(value) {
-      console.log('here');
-      setCount(previous => `${previous}.${value}`);
-    }
+  const onBoardSelect = () => {
+    setType(CLIENT_TYPE.Board);
+  }
 
-    socket.on('connect', onConnect);
-    socket.on('disconnect', onDisconnect);
-    socket.on('foo', onFooEvent);
+  const [type, setType] = useState<CLIENT_TYPE | null>(null);
+  const [name, setName] = useState<string>('');
 
-    return () => {
-      socket.off('connect', onConnect);
-      socket.off('disconnect', onDisconnect);
-      socket.off('foo', onFooEvent);
-    };
-  }, []);
-
-  const [count, setCount] = useState('')
-
-  return (
-    <div className='w-full h-full p-16 relative'>
-      <div className='absolute w-200 top-16 left-200'>
-        <Leaderboard players={[{name: 'jeremy', progress: 0.3}, {name: 'jeremy 2', progress: 0.1}, {name: 'evil jeremy', progress: 0.7}]}/>
+  if (type === CLIENT_TYPE.Player) {
+    return <div>Player</div>
+  } else if (type === CLIENT_TYPE.Host) {
+    return <div>Host</div>
+  } else if (type === CLIENT_TYPE.Board) {
+    return <div>Board</div>
+  } else {
+    return (
+      <div className='w-full h-full p-16 flex flex-col align-items-stretch gap-4'>
+        <input type="text" value={name} onChange={setName} className="h-16 block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+        <button type="submit" onClick={onPlayerSelect} className="h-16 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Player</button>
+        <button type="submit" onClick={onHostSelect} className="h-16 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Host</button>
+        <button type="submit" onClick={onBoardSelect} className="h-16 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Board</button>
       </div>
-      <img src={heroText} className='hero-image absolute filter drop-shadow-2xl'/>
-      <div className='absolute left-0 bottom-0 w-full p-16'>
-        <div className='relative h-48 bg-red-100 rounded-xl shadow-xl p-8'>
-          <div>Question 1:</div>
-          <div>Pick a color</div>
-          <img src={ghada1} className='sticker absolute right-0 top-0 rotate-right filter drop-shadow-2xl'/>
-          <img src={ghada2} className='sticker absolute left-0 top-0 rotate-left filter drop-shadow-2xl'/>
-        </div>
-      </div>
-    </div>
-  )
+    );
+  }
 }
 
 export default App
